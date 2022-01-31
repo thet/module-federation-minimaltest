@@ -14,6 +14,7 @@ module.exports = (env, argv) => {
             path: path.resolve(__dirname, "dist/"),
             clean: true,
             publicPath: "auto",
+            uniqueName: "patternslib",
         },
         optimization: {},
         plugins: [

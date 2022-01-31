@@ -14,6 +14,7 @@ module.exports = (env, argv) => {
             path: path.resolve(__dirname, "../mf-a/dist-b/"),
             clean: true,
             publicPath: "auto",
+            uniqueName: "patternslib",
         },
         optimization: {},
         plugins: [
