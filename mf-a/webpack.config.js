@@ -1,5 +1,7 @@
 process.traceDeprecation = true;
+const package_json = require("./package.json");
 const path = require("path");
+const { ModuleFederationPlugin } = require("webpack").container;
 
 module.exports = (env, argv) => {
     const config = {
@@ -14,6 +16,18 @@ module.exports = (env, argv) => {
             publicPath: "auto",
         },
         optimization: {},
+        plugins: [
+            new ModuleFederationPlugin({
+                name: "mf-a",
+                shareScope: "patternslib",
+                shared: {
+                    jquery: {
+                        singleton: true,
+                        requiredVersion: package_json.dependencies["jquery"],
+                    },
+                },
+            }),
+        ],
     };
 
     if (process.env.NODE_ENV === "development") {
