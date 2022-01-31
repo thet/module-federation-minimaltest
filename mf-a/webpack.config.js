@@ -14,7 +14,7 @@ module.exports = (env, argv) => {
             path: path.resolve(__dirname, "dist/"),
             clean: true,
             publicPath: "auto",
-            uniqueName: "patternslib",
+            //uniqueName: "patternslib",
         },
         optimization: {},
         plugins: [
@@ -25,6 +25,8 @@ module.exports = (env, argv) => {
                     jquery: {
                         singleton: true,
                         requiredVersion: package_json.dependencies["jquery"],
+                        shareScope: "patternslib",
+                        shareKey: "jquery",
                     },
                 },
             }),
