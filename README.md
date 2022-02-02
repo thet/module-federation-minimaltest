@@ -16,6 +16,12 @@ There are: ``mf-a`` and ``mf-b``.
 Both use jQuery and do a super simple thing with it.
 
 
+## Docs
+
+https://webpack.js.org/concepts/module-federation/
+https://webpack.js.org/plugins/module-federation-plugin/
+
+
 ## Test
 
 1)
@@ -53,4 +59,12 @@ See the git history for the experiments:
 
     I thought I could use the ``shareScope`` and ``shareKey`` attributes of a share definition to resolve the problem and have a common shareScope for the dependencies.
     But this doesn't work either.
+
+
+## Alternative approach
+
+Alternative approach to exclude e.g. jQuery from other bundles (which is globally available through the ``plone`` main bundle):
+
+https://webpack.js.org/configuration/externals/
+
 
