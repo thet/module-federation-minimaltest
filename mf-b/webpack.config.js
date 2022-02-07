@@ -19,14 +19,15 @@ module.exports = (env, argv) => {
         optimization: {},
         plugins: [
             new ModuleFederationPlugin({
-                name: "mf-b",
-                shareScope: "patternslib",
+                name: "mf_b",
+                filename: 'remote.js',
+                exposes: {
+                    './main': './src/bootstrap.js'
+                },
                 shared: {
                     jquery: {
                         singleton: true,
                         requiredVersion: package_json.dependencies["jquery"],
-                        shareScope: "patternslib",
-                        shareKey: "jquery",
                     },
                 },
             }),

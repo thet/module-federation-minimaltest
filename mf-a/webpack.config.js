@@ -19,21 +19,19 @@ module.exports = (env, argv) => {
         optimization: {},
         plugins: [
             new ModuleFederationPlugin({
-                name: "mf-a",
-                shareScope: "patternslib",
+                name: "mf_a",
                 shared: {
                     jquery: {
                         singleton: true,
                         requiredVersion: package_json.dependencies["jquery"],
-                        shareScope: "patternslib",
-                        shareKey: "jquery",
                     },
                 },
             }),
         ],
     };
 
-    if (process.env.NODE_ENV === "development") {
+    // if (process.env.NODE_ENV === "development") {
+
         // Add a dev server.
         config.devServer = {
             static: {
@@ -45,11 +43,12 @@ module.exports = (env, argv) => {
                 "Access-Control-Allow-Origin": "*",
             },
         };
+        config.mode = 'development';
         config.optimization.minimize = false;
         config.devtool = false;
         config.watchOptions = {
             ignored: ["node_modules/**", "docs/**"],
         };
-    }
+    // }
     return config;
 };
