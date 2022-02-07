@@ -68,3 +68,21 @@ Alternative approach to exclude e.g. jQuery from other bundles (which is globall
 https://webpack.js.org/configuration/externals/
 
 
+## Solution
+
+We need to distinguish between **two roles** of apps: the **host (aka shell)** and the **remote (=plugin)**. In this example, mf-a acts as the host and mf-b acts as the remote.
+
+1. In the remote, expose metadata (remote entry via ``filename`` property) and expose modules that can be loaded into the host:
+    https://github.com/manfredsteyer/plugin-demo/blob/main/mf-b/webpack.config.js#L23
+
+2. In the host's ``index.html``, load the remote entry files of the remotes in question. This gives the host the needed meta data for deciding about which versions of shared libraries to load (e. g. highest compatible version = highest minor version)
+    https://github.com/manfredsteyer/plugin-demo/blob/main/mf-a/index.html#L8
+
+3. In the host, use the helper function ``loadRemoteModule`` to load the individual remotes on demand:
+    https://github.com/manfredsteyer/plugin-demo/blob/main/mf-a/src/bootstrap.js#L4
+
+    This helper function is a simple convenience wrapper around the webpack runtime API. 
+
+As the result, both, the host (mf-a) and the remote (mf-b), are loaded and jQuery is shared:
+
+![jQuery shared between mf-a and mf-b](result.png)
