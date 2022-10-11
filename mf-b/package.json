@@ -1,32 +1,20 @@
 {
     "name": "@patternslib/mf-b",
     "version": "1.0.0",
-    "description": "Module federation auto-share test A",
+    "description": "Module federation auto-share test B",
     "license": "MIT",
     "main": "./src/mf-b.js",
     "dependencies": {
         "jquery": "^3.6.0"
     },
     "devDependencies": {
-        "eslint": "^8.2.0",
-        "eslint-config-prettier": "^8.3.0",
-        "prettier": "^2.5.1",
         "webpack": "^5.64.1",
         "webpack-bundle-analyzer": "^4.4.2",
         "webpack-cli": "^4.9.2",
-        "webpack-dev-server": "^4.5.0",
-        "yarn": "^1.22.17"
+        "webpack-dev-server": "^4.5.0"
     },
     "scripts": {
         "start": "webpack serve --config webpack.config.js",
-        "watch": "webpack --config webpack.config.js --watch",
-        "build": "webpack --config webpack.config.js",
         "build:stats": "webpack --config webpack.config.js --json > stats.json"
-    },
-    "browserslist": [
-        "last 1 Chrome version, last 1 Firefox version"
-    ],
-    "publishConfig": {
-        "access": "public"
     }
 }

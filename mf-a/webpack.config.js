@@ -3,20 +3,12 @@ const package_json = require("./package.json");
 const path = require("path");
 const { ModuleFederationPlugin } = require("webpack").container;
 
-module.exports = (env, argv) => {
+module.exports = () => {
+    // Module federation relevant config
     const config = {
         entry: {
             bundle: path.resolve(__dirname, "src/index.js"),
         },
-        output: {
-            filename: "[name].js",
-            chunkFilename: "chunks/[name].[contenthash].min.js",
-            path: path.resolve(__dirname, "dist/"),
-            clean: true,
-            publicPath: "auto",
-            //uniqueName: "patternslib",
-        },
-        optimization: {},
         plugins: [
             new ModuleFederationPlugin({
                 name: "mf_a",
@@ -30,25 +22,34 @@ module.exports = (env, argv) => {
         ],
     };
 
-    // if (process.env.NODE_ENV === "development") {
+    // Common config
+    config.output = {
+        filename: "[name].js",
+        chunkFilename: "chunks/[name].[contenthash].min.js",
+        path: path.resolve(__dirname, "dist/"),
+        clean: true,
+        publicPath: "auto",
+    };
+    config.mode = "development";
+    config.optimization = {
+        minimize: false,
+    };
+    config.devtool = false;
 
-        // Add a dev server.
-        config.devServer = {
-            static: {
-                directory: __dirname,
-            },
-            port: "3001",
-            host: "0.0.0.0",
-            headers: {
-                "Access-Control-Allow-Origin": "*",
-            },
-        };
-        config.mode = 'development';
-        config.optimization.minimize = false;
-        config.devtool = false;
-        config.watchOptions = {
-            ignored: ["node_modules/**", "docs/**"],
-        };
-    // }
+    // Add a dev server.
+    config.devServer = {
+        static: {
+            directory: __dirname,
+        },
+        port: "3001",
+        host: "0.0.0.0",
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+        },
+    };
+    config.watchOptions = {
+        ignored: ["node_modules/**", "docs/**"],
+    };
+
     return config;
 };

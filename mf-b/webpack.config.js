@@ -8,21 +8,12 @@ module.exports = (env, argv) => {
         entry: {
             bundle: path.resolve(__dirname, "src/index.js"),
         },
-        output: {
-            filename: "[name].js",
-            chunkFilename: "chunks/[name].[contenthash].min.js",
-            path: path.resolve(__dirname, "../mf-a/dist-b/"),
-            clean: true,
-            publicPath: "auto",
-            //uniqueName: "patternslib",
-        },
-        optimization: {},
         plugins: [
             new ModuleFederationPlugin({
                 name: "mf_b",
-                filename: 'remote.js',
+                filename: "remote.js",
                 exposes: {
-                    './main': './src/bootstrap.js'
+                    "./main": "./src/bundle.js",
                 },
                 shared: {
                     jquery: {
@@ -34,23 +25,34 @@ module.exports = (env, argv) => {
         ],
     };
 
-    if (process.env.NODE_ENV === "development") {
-        // Add a dev server.
-        config.devServer = {
-            static: {
-                directory: __dirname,
-            },
-            port: "3002",
-            host: "0.0.0.0",
-            headers: {
-                "Access-Control-Allow-Origin": "*",
-            },
-        };
-        config.optimization.minimize = false;
-        config.devtool = false;
-        config.watchOptions = {
-            ignored: ["node_modules/**", "docs/**"],
-        };
-    }
+    // Common config
+    config.output = {
+        filename: "[name].js",
+        chunkFilename: "chunks/[name].[contenthash].min.js",
+        path: path.resolve(__dirname, "../mf-a/dist-b/"),
+        clean: true,
+        publicPath: "auto",
+    };
+    config.mode = "development";
+    config.optimization = {
+        minimize: false,
+    };
+    config.devtool = false;
+
+    // Add a dev server.
+    config.devServer = {
+        static: {
+            directory: __dirname,
+        },
+        port: "3002",
+        host: "0.0.0.0",
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+        },
+    };
+    config.watchOptions = {
+        ignored: ["node_modules/**", "docs/**"],
+    };
+
     return config;
 };
